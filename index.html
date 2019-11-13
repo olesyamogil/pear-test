@@ -15,13 +15,50 @@
   <form class="registration-form">
     <input type="text" placeholder="ФИО*" required>
     <input type="email" placeholder="E-mail (Ваш логин)*" required>
-    <input type="tel" placeholder="Телефон*" pattern="[0-9]{10}" required>
+    <input type="tel" id="phone-number" placeholder="Телефон*" pattern="0[\d]{2}-[\d]{3}-[\d]{2}-[\d]{2}" required>
     <input type="text" placeholder="Страна*" required>
-    <input type="text" placeholder="Дата рождения">
-    <input type="password" placeholder="Пароль*">
-    <input type="password" placeholder="Повторить пароль*">
+    <input type="text" id="birth-date" placeholder="Дата рождения" pattern="[\d]{2}-[\d]{2}-[\d]{4}" required>
+    <input type="password" id="primary-password" placeholder="Пароль*" required>
+    <input type="password" id="repeated-password" placeholder="Повторить пароль*" required>
     <button type="submit" class="registration-button">Зарегистрироваться</button>
   </form>
 </section>
+<script>
+  const phoneNumber = document.getElementById('phone-number');
+  phoneNumber.oninvalid = function(e) {
+    e.target.setCustomValidity("");
+    if (!e.target.validity.valid) {
+      e.target.setCustomValidity("Phone number should match 0XX-XXX-XX-XX");
+    }
+  };
+  phoneNumber.oninput = function(e) {
+    e.target.setCustomValidity("");
+  };
+
+  const birthDate = document.getElementById('birth-date');
+  birthDate.oninvalid = function(e) {
+    e.target.setCustomValidity("");
+    if (!e.target.validity.valid) {
+      e.target.setCustomValidity("Birth date should match DD-MM-YYYY");
+    }
+  };
+  birthDate.oninput = function(e) {
+    e.target.setCustomValidity("");
+  };
+
+  const primaryPassword = document.getElementById('primary-password');
+  const repeatedPassword = document.getElementById('repeated-password');
+  const form = document.querySelector('.registration-form');
+  form.addEventListener('submit', (event)=>{
+    if (primaryPassword.value !== repeatedPassword.value) {
+      repeatedPassword.setCustomValidity("Repeat your password");
+    }
+  });
+  repeatedPassword.oninput = function(e) {
+    e.target.setCustomValidity("");
+  };
+
+
+</script>
 </body>
 </html>
