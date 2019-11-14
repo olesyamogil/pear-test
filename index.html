@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport"
         content="width=device-width">
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"></script>
+  <script src="jquery.maskedinput.min.js"></script>
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <title>Registration</title>
@@ -15,7 +17,7 @@
   <form class="registration-form">
     <input type="text" placeholder="ФИО*" required>
     <input type="email" placeholder="E-mail (Ваш логин)*" required>
-    <input type="tel" id="phone-number" placeholder="Телефон*" pattern="0[\d]{2}-[\d]{3}-[\d]{2}-[\d]{2}" required>
+    <input type="tel" id="phone-number" placeholder="Телефон*" pattern="\(0[\d]{2}\)[\d]{3}-[\d]{2}-[\d]{2}" required>
     <input type="text" placeholder="Страна*" required>
     <input type="text" id="birth-date" placeholder="Дата рождения" pattern="[\d]{2}-[\d]{2}-[\d]{4}" required>
     <input type="password" id="primary-password" placeholder="Пароль*" required>
@@ -28,7 +30,7 @@
   phoneNumber.oninvalid = function(e) {
     e.target.setCustomValidity("");
     if (!e.target.validity.valid) {
-      e.target.setCustomValidity("Phone number should match 0XX-XXX-XX-XX");
+      e.target.setCustomValidity("Phone number should match (0XX)XXX-XX-XX");
     }
   };
   phoneNumber.oninput = function(e) {
@@ -52,12 +54,18 @@
   form.addEventListener('submit', (event)=>{
     if (primaryPassword.value !== repeatedPassword.value) {
       repeatedPassword.setCustomValidity("Repeat your password");
+      event.preventDefault();
     }
   });
   repeatedPassword.oninput = function(e) {
     e.target.setCustomValidity("");
   };
 
+
+  $(function(){
+    $("#birth-date").mask("99-99-9999");
+    $("#phone-number").mask("(099)999-99-99");
+  });
 
 </script>
 </body>
